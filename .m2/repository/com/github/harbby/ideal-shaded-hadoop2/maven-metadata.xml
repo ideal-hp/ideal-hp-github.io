@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.github.harbby</groupId>
+  <artifactId>ideal-shaded-hadoop2</artifactId>
+  <versioning>
+    <release>2.7.4.1-apache2</release>
+    <versions>
+      <version>2.7.4.1-apache2</version>
+    </versions>
+    <lastUpdated>20180717050210</lastUpdated>
+  </versioning>
+</metadata>
