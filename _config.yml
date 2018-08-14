@@ -7,7 +7,7 @@
 
 # Site settings
 title: ideal # ex. I m Chuan
-name: ideal # ex. DONGChuan
+name: ideal-hp # ex. DONGChuan
 email: yezhixinghai@gmail.com
 location: chengdu/china # ex. Nice, France
 company: jumei
@@ -47,8 +47,12 @@ kramdown:
   input: GFM
   enable_coderay: true
 
+# !!!重要!!! 请修改下面这些信息为你自己申请的
+# !!!Important!!! Please modify infos below to yours
+# https://disqus.com
 # Disque
-disque: my_disque_settings # ex. httpdongchuangithubio.disqus.com
+disque:
+  username:
 
 # Pagination
 paginate: 10
