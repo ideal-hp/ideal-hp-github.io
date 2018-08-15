@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>NodeUI 是什么? - 高可用的渲染容器</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/project/sylph/css/index.css">
+
+
+
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo" alt="nodeui">
+    <img src="/images/logo.png" width="89"><span>NodeUI</span>
+    </a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/docs/intro/" alt="指南" class="cur">指南</a></li><li><a href="/zh-cn/page/process.html" alt="接入流程" class="">接入流程</a></li><li><a href="/zh-cn/page/user.html" alt="使用案例" class="">使用案例</a></li><li><a href="/zh-cn/fekey/index.html" alt="fekey" class="">fekey</a></li>
+
+      
+      
+      
+      
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>NodeUI 是什么?</h1>
+    <p><strong>NodeUI 是基于Node.js的一套高可用的渲染容器</strong>，目前用在百度外卖多个产品线。NodeUI并不是一个框架，而是一套完整的解决方案，主要包括：</p>
+<ul>
+<li>运行框架：<code>Fly</code> 基于<code>Express</code>的运行时框架</li>
+<li>开发工具：<code>fekey</code>，对fis3解决方案的封装，更好的与Node能力结合</li>
+<li>运行时：基于<code>Node</code>及<code>PM2</code>源码编译出的可维护的<code>Runtime</code>环境</li>
+<li>基础运维：与公司内部运维系统<code>Noah</code>，DA数据结合形成了一套高效稳定的运维能力</li>
+</ul>
+<h2 id="设计原则"><a class="markdown-anchor" href="#设计原则">#</a> 设计原则</h2>
+<ul>
+<li>利用插件系统分离<strong>配置与实现</strong></li>
+<li>奉行『<strong>约定优于配置</strong>』，按照[一套统一的约定]进行应用开发，从开发工具，到目录结构。</li>
+<li>遵循百度现有服务体系。与下游服务的通信采用<code>ral</code>请求方式，日志遵循统一日志格式。</li>
+</ul>
+<h2 id="特性"><a class="markdown-anchor" href="#特性">#</a> 特性</h2>
+<ul>
+<li>舒适的开发体验：与FIS一致</li>
+<li>高效的通信：Node与PHP的通信</li>
+<li>便捷的部署：自动重启，负载均衡</li>
+<li>可靠的运维：日志 监控 报警</li>
+</ul>
+<h2 id="什么样的项目适合用nodeui"><a class="markdown-anchor" href="#什么样的项目适合用nodeui">#</a> 什么样的项目适合用NodeUI</h2>
+<p>目前NodeUI的定位主要是<code>数据处理能力</code>及<code>模板渲染能力</code>。基于这两大能力，NodeUI有自己的特定应用场景。主要如下：</p>
+<ul>
+<li>h5页面</li>
+<li>接口转发，数据裁剪</li>
+<li>强烈希望前后端分离</li>
+</ul>
+
+  </article>
+  
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    
+    <ul><li><a href="/zh-cn/docs/intro/" alt="指南" class="cur">指南</a></li><li><a href="/zh-cn/page/process.html" alt="接入流程" class="">接入流程</a></li><li><a href="/zh-cn/page/user.html" alt="使用案例" class="">使用案例</a></li><li><a href="/zh-cn/fekey/index.html" alt="fekey" class="">fekey</a></li></ul>
+  </div>
+  <dl><dt>新手指南</dt><dd><ul><li><a href="/zh-cn/docs/intro/index.html" class="cur">NodeUI 是什么</a></li><li><a href="/zh-cn/docs/intro/quickstart.html" class="">快速入门</a></li></ul></dd><dt>基础功能</dt><dd><ul><li><a href="/zh-cn/docs/basics/structure.html" class="">目录结构</a></li><li><a href="/zh-cn/docs/basics/router.html" class="">路由</a></li><li><a href="/zh-cn/docs/basics/service.html" class="">Service</a></li><li><a href="/zh-cn/docs/basics/mock.html" class="">数据模拟</a></li></ul></dd><dt>核心功能</dt><dd><ul><li><a href="/zh-cn/docs/core/development.html" class="">本地开发</a></li><li><a href="/zh-cn/docs/core/deployment.html" class="">应用部署</a></li><li><a href="/zh-cn/docs/core/logger.html" class="">日志</a></li><li><a href="/zh-cn/docs/core/view.html" class="">模板渲染</a></li><li><a href="/zh-cn/docs/core/runtime.html" class="">Runtime</a></li></ul></dd><dt>进阶</dt><dd><ul><li><a href="/zh-cn/docs/advanced/fetch-server.html" class="">负载均衡</a></li><li><a href="/zh-cn/docs/advanced/server-isoloton.html" class="">服务隔离</a></li></ul></dd><dt>常见问题</dt><dd><ul><li><a href="/zh-cn/docs/faq/deploy.html" class="">部署问题</a></li><li><a href="/zh-cn/docs/faq/debug.html" class="">Node调试</a></li><li><a href="/zh-cn/docs/faq/wechat.html" class="">微信授权</a></li><li><a href="/zh-cn/docs/faq/contributing.html" class="">贡献文章</a></li></ul></dd></dl>
+</aside>
+<script src="/project/sylph/js/mobile-aside.js"></script>
+
+</div>
+
+  </div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script> 
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script> -->
+</html>

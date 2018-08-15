@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>fekey前端工程化解决方案 - 高可用的渲染容器</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/project/sylph/css/index.css">
+
+
+
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo" alt="nodeui">
+    <img src="/images/logo.png" width="89"><span>NodeUI</span>
+    </a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/docs/intro/" alt="指南" class="">指南</a></li><li><a href="/zh-cn/page/process.html" alt="接入流程" class="">接入流程</a></li><li><a href="/zh-cn/page/user.html" alt="使用案例" class="">使用案例</a></li><li><a href="/zh-cn/fekey/index.html" alt="fekey" class="cur">fekey</a></li>
+
+      
+      
+      
+      
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>fekey前端工程化解决方案</h1>
+    <p><strong>fekey是一套前端工程化解决方案</strong>，通过优化构建工具，解决方案集成的方式，帮助开发人员降低研发成本、提高研发效率。它主要包括以下几方面：</p>
+<ul>
+<li>构建工具：基于fis3封装的构建工具</li>
+<li>命令行扩展：支持通过插件的形式扩展fekey命令行</li>
+<li>脚手架：支持通过用户自定义脚手架</li>
+<li>构建解决方案：封装了构建层了解决方案，更好地与NodeUI集成</li>
+</ul>
+<h2 id="设计原则"><a class="markdown-anchor" href="#设计原则">#</a> 设计原则</h2>
+<ul>
+<li>利用插件方式，实现系统的分离和扩展</li>
+<li>遵循降低研发成本原则，针对不同业务场景提供解决方案的集成</li>
+<li>深入理解FIS团队的fis3技术成果，构建最优化</li>
+</ul>
+<h2 id="特性"><a class="markdown-anchor" href="#特性">#</a> 特性</h2>
+<ul>
+<li>业务场景优化：针对一些特定的业务场景提供完善的构架解决方案</li>
+<li>优秀的脚手架能力：支持自定义脚手架规则，从gihub上同步脚手架工程</li>
+<li>舒适的开发体验：本地server，proxy能力，多重mock</li>
+<li>便捷的工具继承：通过命令行扩展继承社区解决方案，当前继承了jsdoc、localserver等</li>
+</ul>
+<h2 id="什么样的项目适合用fekey"><a class="markdown-anchor" href="#什么样的项目适合用fekey">#</a> 什么样的项目适合用fekey</h2>
+<ul>
+<li>目前fekey作为NodeUI配合使用的开发工具，针对NodeUI的app工程在构建上做了深度优化，NodeUI的各业务方可以使用fekey。</li>
+<li>原来基于fis3的项目，想要具有更丰富的脚手架和命令行扩展能力的工程，可以将工程迁移到fekey，迁移的成本很低。</li>
+<li>对构建能力感兴趣的同学，可以在项目中尝试使用fekey，fekey接管了fis3的构建核心，大家可以参与到构建核心能力的升级和深度优化中来。</li>
+</ul>
+
+  </article>
+  
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    
+    <ul><li><a href="/zh-cn/docs/intro/" alt="指南" class="">指南</a></li><li><a href="/zh-cn/page/process.html" alt="接入流程" class="">接入流程</a></li><li><a href="/zh-cn/page/user.html" alt="使用案例" class="">使用案例</a></li><li><a href="/zh-cn/fekey/index.html" alt="fekey" class="cur">fekey</a></li></ul>
+  </div>
+  <dl><dt>新手指南</dt><dd><ul><li><a href="/zh-cn/fekey/index.html" class="cur">fekey 是什么</a></li><li><a href="/zh-cn/fekey/quickstart.html" class="">快速开始</a></li></ul></dd></dl>
+</aside>
+<script src="/project/sylph/js/mobile-aside.js"></script>
+
+</div>
+
+  </div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script> 
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script> -->
+</html>
