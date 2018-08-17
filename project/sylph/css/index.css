@@ -1510,7 +1510,7 @@ aside li {
 .post-titlt {
   margin-top: 56px;
   position: relative;
-  background: url("/project/sylph/images/banner.jpg") 0 80%;
+  background: url("../images/banner.jpg") 0 80%;
   background-size: cover;
 }
 .docs-header {
