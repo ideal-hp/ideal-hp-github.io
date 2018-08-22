@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>主要工作 - sylph流计算平台</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/project/sylph/images/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/project/sylph/css/index.css">
+
+
+
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/project/sylph/en/" class="nav-logo" alt="nodeui">
+    <img src="/project/sylph/images/logo.png" width="89"><span>SYLPH</span>
+    </a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li>
+
+      <li class="translations">
+        <a class="nav-link">change language</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/project/sylph/zh-cn">中文</a></li>
+          <li><a href="/project/sylph/en">English</a></li>
+        </ul>
+      </li>
+
+      <!-- github star星数 -->
+      <li>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=star&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=fork&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+      </li>
+
+      
+
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>主要工作</h1>
+    <p>通过PM2拆分服务，确保不同服务相互不受影响。</p>
+<h3 id="1-改造现有pm2json支持多app启动"><a class="markdown-anchor" href="#1-改造现有pm2json支持多app启动">#</a> 1. 改造现有<code>pm2.json</code>，支持多app启动</h3>
+<p>根据当前公有云Node集群现状（机器均为24核），拆分为两个独立服务：</p>
+<ul>
+<li><code>nuomi</code>: 承载糯米组件流量，端口为<code>8197</code>，实例数为14</li>
+<li><code>h5</code>: 承载所有h5模块渲染流量，端口为<code>8198</code>,实例数为10</li>
+</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;apps&quot;: [&#123;</span><br><span class="line">        &quot;exec_interpreter&quot;: &quot;node&quot;,</span><br><span class="line">        &quot;name&quot;: &quot;nuomi&quot;,</span><br><span class="line">        &quot;exec_mode&quot;: &quot;cluster_mode&quot;,</span><br><span class="line">        &quot;instances&quot;: &quot;14&quot;,</span><br><span class="line">        &quot;max_memory_restart&quot;: &quot;500M&quot;,</span><br><span class="line">        &quot;merge_logs&quot;: false,</span><br><span class="line">        &quot;script&quot;: &quot;app.js&quot;,</span><br><span class="line">        &quot;ignoreWatch&quot;: [&quot;pm2&quot;, &quot;log&quot;, &quot;node_modules&quot;],</span><br><span class="line">        &quot;env&quot;: &#123;</span><br><span class="line">            &quot;NODE_ENV&quot;: &quot;production&quot;,</span><br><span class="line">            &quot;PM2_GRACEFUL_TIMEOUT&quot;: 1000,</span><br><span class="line">            &quot;PORT&quot;: 8197,</span><br><span class="line">            &quot;DEBUG&quot;: true</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;env_dev&quot;: &#123;</span><br><span class="line">            &quot;NODE_ENV&quot;: &quot;development&quot;,</span><br><span class="line">            &quot;DEBUG&quot;: true</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;env_test&quot;: &#123;</span><br><span class="line">            &quot;NODE_ENV&quot;: &quot;qa&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        &quot;exec_interpreter&quot;: &quot;node&quot;,</span><br><span class="line">        &quot;name&quot;: &quot;h5&quot;,</span><br><span class="line">        &quot;exec_mode&quot;: &quot;cluster_mode&quot;,</span><br><span class="line">        &quot;instances&quot;: &quot;10&quot;,</span><br><span class="line">        &quot;max_memory_restart&quot;: &quot;500M&quot;,</span><br><span class="line">        &quot;merge_logs&quot;: false,</span><br><span class="line">        &quot;script&quot;: &quot;app.js&quot;,</span><br><span class="line">        &quot;ignoreWatch&quot;: [&quot;pm2&quot;, &quot;log&quot;, &quot;node_modules&quot;],</span><br><span class="line">        &quot;env&quot;: &#123;</span><br><span class="line">            &quot;NODE_ENV&quot;: &quot;production&quot;,</span><br><span class="line">            &quot;PM2_GRACEFUL_TIMEOUT&quot;: 1000,</span><br><span class="line">            &quot;PORT&quot;: 8198,</span><br><span class="line">            &quot;DEBUG&quot;: true</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;env_dev&quot;: &#123;</span><br><span class="line">            &quot;NODE_ENV&quot;: &quot;development&quot;,</span><br><span class="line">            &quot;DEBUG&quot;: true</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;env_test&quot;: &#123;</span><br><span class="line">            &quot;NODE_ENV&quot;: &quot;qa&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-改造启动脚本支持业务app独立重启"><a class="markdown-anchor" href="#2-改造启动脚本支持业务app独立重启">#</a> 2. 改造启动脚本，支持业务APP独立重启</h3>
+<pre><code>nuomi_restart.sh
+h5_restart.sh
+</code></pre>
+<p>命令改造：</p>
+<pre><code>bin/control start  // 开启所有服务
+bin/control stop appname // 关闭某个服务（h5、nuomi）
+bin/control delete appname // 删除某个服务（h5、nuomi）
+bin/control restart appname // 重启某个服务
+bin/control reload appname // 0宕机重启，后续上线重启采用reload方案
+</code></pre>
+<p><img src="http://younth.coding.me/static/nodeui/reload.jpeg" alt="reload"></p>
+<h2 id="上线步骤"><a class="markdown-anchor" href="#上线步骤">#</a> 上线步骤</h2>
+<h3 id="1-上线nodeui服务"><a class="markdown-anchor" href="#1-上线nodeui服务">#</a> 1. 上线NodeUI服务</h3>
+<ul>
+<li>
+<p>上线前先确定线上的服务进程名称</p>
+</li>
+<li>
+<p>涉及底层上线，上线前需要先stop/delete掉老的进程，为确保服务稳定，采用先stop，然后上线新的隔离方案，回归正常后，delete老的服务进程。</p>
+</li>
+<li>
+<p>需要review方案，或者直接OP操作删除老的进程。</p>
+</li>
+<li>
+<p>增加上线模块</p>
+</li>
+<li>
+<p>绑定上线重启脚本</p>
+</li>
+</ul>
+<h3 id="2-上线ng-rewrite-端口"><a class="markdown-anchor" href="#2-上线ng-rewrite-端口">#</a> 2. 上线ng rewrite 端口</h3>
+<ul>
+<li>配置新的vip服务</li>
+<li>修改rewrite</li>
+</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/home/work/odp_cater/webserver/conf/vhost/</span><br></pre></td></tr></table></figure></p>
+<h2 id="重点关注"><a class="markdown-anchor" href="#重点关注">#</a> 重点关注</h2>
+<ul>
+<li>组件业务</li>
+<li>h5业务</li>
+<li>日志（pm2+业务，关注日志是否会错乱）</li>
+<li>服务稳定（Node进程状态）</li>
+</ul>
+<h2 id="回滚方案"><a class="markdown-anchor" href="#回滚方案">#</a> 回滚方案</h2>
+<p>由于目前公有云回滚可能有坑，回滚过程进程应该不会被杀掉，可能有残留进程，需要杀掉。所以最佳回归方式是<strong>覆盖上线</strong>。涉及的模块：</p>
+<ul>
+<li>fly</li>
+<li>runtime</li>
+</ul>
+
+  </article>
+  
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    
+    <ul><li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li></ul>
+  </div>
+  <dl><dt>guide</dt><dd><ul><li><a href="/project/sylph/en/docs/intro/index.html" class="">What is STLPH</a></li><li><a href="/project/sylph/en/docs/intro/quickstart.html" class="">Quick start</a></li><li><a href="/project/sylph/en/docs/intro/etl.html" class="">ETL Job</a></li></ul></dd><dt>Basics</dt><dd><ul><li><a href="/project/sylph/en/docs/basics/setup.html" class="">Setup</a></li><li><a href="/project/sylph/en/docs/basics/structure.html" class="">Directory Structure</a></li><li><a href="/project/sylph/en/docs/basics/deployment.html" class="">Application deployment</a></li><li><a href="/project/sylph/en/docs/basics/online.html" class="">Job Online</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/project/sylph/en/docs/advanced/framework.html" class="">Framework development</a></li><li><a href="/project/sylph/en/docs/advanced/plugin_manager.html" class="">PluginManager</a></li><li><a href="/project/sylph/en/docs/advanced/plugin_api.html" class="">connector Api</a></li></ul></dd><dt>FAQ</dt><dd><ul><li><a href="/project/sylph/en/docs/faq/deploy.html" class="">Deploy</a></li></ul></dd><dt>Other</dt><dd><ul><li><a href="/project/sylph/en/docs/basics/service.html" class="">Service</a></li></ul></dd></dl>
+</aside>
+<script src="/project/sylph/js/mobile-aside.js"></script>
+
+</div>
+
+  </div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script> 
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script> -->
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Node.js调试 - sylph流计算平台</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/project/sylph/images/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/project/sylph/css/index.css">
+
+
+
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/project/sylph/en/" class="nav-logo" alt="nodeui">
+    <img src="/project/sylph/images/logo.png" width="89"><span>SYLPH</span>
+    </a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li>
+
+      <li class="translations">
+        <a class="nav-link">change language</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/project/sylph/zh-cn">中文</a></li>
+          <li><a href="/project/sylph/en">English</a></li>
+        </ul>
+      </li>
+
+      <!-- github star星数 -->
+      <li>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=star&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=fork&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+      </li>
+
+      
+
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Node.js调试</h1>
+    <h2 id="线下调试"><a class="markdown-anchor" href="#线下调试">#</a> 线下调试</h2>
+<h3 id="需求"><a class="markdown-anchor" href="#需求">#</a> 需求</h3>
+<ul>
+<li>http请求断点调试</li>
+<li>node-ral 向后请求查看</li>
+<li>启动调试</li>
+</ul>
+<h2 id="版本"><a class="markdown-anchor" href="#版本">#</a> 版本</h2>
+<pre><code>node v4.2.4
+Node Inspector v0.12.5
+</code></pre>
+<h2 id="node-inspector"><a class="markdown-anchor" href="#node-inspector">#</a> node-inspector</h2>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm i -g node-inspector</span><br><span class="line"></span><br><span class="line">npm run debug(node --debug app.js)</span><br><span class="line"></span><br><span class="line">node-inspector --web-port=5006</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>建议配合 <code>supervisor</code> 使用,支持node 自动重启。</p>
+</blockquote>
+<h2 id="devtool"><a class="markdown-anchor" href="#devtool">#</a> devtool</h2>
+<blockquote>
+<p>建议大家尝试，取代node-inspector</p>
+</blockquote>
+<pre><code>https://github.com/Jam3/devtool
+</code></pre>
+<h2 id="线上日志"><a class="markdown-anchor" href="#线上日志">#</a> 线上—日志</h2>
+<pre><code>线上通过日志排查 access nodeui等
+</code></pre>
+<h2 id="远程调试"><a class="markdown-anchor" href="#远程调试">#</a> 远程调试</h2>
+<h2 id="错误捕获"><a class="markdown-anchor" href="#错误捕获">#</a> 错误捕获</h2>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = Http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="string">''</span>;</span><br><span class="line">    req.on(<span class="string">'data'</span>, (data) =&gt; &#123;</span><br><span class="line">      result += data;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    req.once(<span class="string">'end'</span>, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> obj = <span class="built_in">JSON</span>.parse(result);</span><br><span class="line">      resolve(obj);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  promise.then(<span class="function">(<span class="params">obj</span>) =&gt;</span> &#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>);</span><br><span class="line">    <span class="comment">// 这里会报错</span></span><br><span class="line">    res.end(obj.foo.bar);</span><br><span class="line">  &#125;).catch(<span class="function">(<span class="params">reason</span>) =&gt;</span> &#123;</span><br><span class="line">    res.writeHead(<span class="number">500</span>);</span><br><span class="line">    res.end();</span><br><span class="line">    <span class="built_in">console</span>.error(reason);</span><br><span class="line">    <span class="comment">// 抛错后退出程序</span></span><br><span class="line">    process.abort()</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">8080</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'listening at http://localhost:8080'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<pre><code>// post请求
+curl -X POST http://localhost:8080 -d '{&quot;Hi&quot;: &quot;world&quot;}'</code></pre>
+
+  </article>
+  
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    
+    <ul><li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li></ul>
+  </div>
+  <dl><dt>guide</dt><dd><ul><li><a href="/project/sylph/en/docs/intro/index.html" class="">What is STLPH</a></li><li><a href="/project/sylph/en/docs/intro/quickstart.html" class="">Quick start</a></li><li><a href="/project/sylph/en/docs/intro/etl.html" class="">ETL Job</a></li></ul></dd><dt>Basics</dt><dd><ul><li><a href="/project/sylph/en/docs/basics/setup.html" class="">Setup</a></li><li><a href="/project/sylph/en/docs/basics/structure.html" class="">Directory Structure</a></li><li><a href="/project/sylph/en/docs/basics/deployment.html" class="">Application deployment</a></li><li><a href="/project/sylph/en/docs/basics/online.html" class="">Job Online</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/project/sylph/en/docs/advanced/framework.html" class="">Framework development</a></li><li><a href="/project/sylph/en/docs/advanced/plugin_manager.html" class="">PluginManager</a></li><li><a href="/project/sylph/en/docs/advanced/plugin_api.html" class="">connector Api</a></li></ul></dd><dt>FAQ</dt><dd><ul><li><a href="/project/sylph/en/docs/faq/deploy.html" class="">Deploy</a></li></ul></dd><dt>Other</dt><dd><ul><li><a href="/project/sylph/en/docs/basics/service.html" class="">Service</a></li></ul></dd></dl>
+</aside>
+<script src="/project/sylph/js/mobile-aside.js"></script>
+
+</div>
+
+  </div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script> 
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script> -->
+</html>

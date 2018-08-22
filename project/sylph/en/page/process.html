@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NodeUI接入流程 - sylph流计算平台</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/project/sylph/images/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/project/sylph/css/index.css">
+
+
+
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/project/sylph/en/" class="nav-logo" alt="nodeui">
+    <img src="/project/sylph/images/logo.png" width="89"><span>SYLPH</span>
+    </a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li>
+
+      <li class="translations">
+        <a class="nav-link">change language</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/project/sylph/zh-cn">中文</a></li>
+          <li><a href="/project/sylph/en">English</a></li>
+        </ul>
+      </li>
+
+      <!-- github star星数 -->
+      <li>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=star&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=fork&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+      </li>
+
+      
+
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <!-- 增加header样式 -->
+<header class="post-titlt">
+	<h1 class="docs-header">
+		<div class="container">
+		  <i class="fa-flag-checkered fa"></i> NodeUI接入流程
+	    </div>
+	</h1>
+</header>
+
+<div class="page-main post">
+  <article class="markdown-body">
+
+    <p>如果当前的产品开发陷入了如下的困惑：</p>
+<ul>
+<li>前端开发环境强依赖后端</li>
+<li>基于<code>React/Vue</code>移动端性能优化遇到首屏瓶颈</li>
+<li>想用<code>bigpipe</code>加速渲染</li>
+<li>后端统一输出的接口不满意，想拆分 or 想合并请求</li>
+<li>我是前端，我就是想用<code>Node.js</code></li>
+</ul>
+<p>那么，恭喜你，NodeUI是非常适合你的。我们的接入流程是：</p>
+<h4 id="1-流量预估"><a class="markdown-anchor" href="#1-流量预估">#</a> 1. 流量预估</h4>
+<p>如果你想直接把自己的业务接入线上的NodeUI服务，那么需要实现评估业务的流量。主要包括 <code>PV</code> 及 <code>QPS</code>。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>预估值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QPS峰值</td>
+<td>10</td>
+</tr>
+<tr>
+<td>PV总量</td>
+<td>10W</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-申请路由及模块"><a class="markdown-anchor" href="#2-申请路由及模块">#</a> 2. 申请路由及模块</h4>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模块名称</td>
+<td>cfe_h5</td>
+</tr>
+<tr>
+<td>iCode地址</td>
+<td></td>
+</tr>
+<tr>
+<td>路由名称</td>
+<td>fly/vip</td>
+</tr>
+<tr>
+<td>BNS服务</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：项目模块名称及fekey构建时候的namespance，与路由名称可以不一致</strong></p>
+<h4 id="3-发送邮件"><a class="markdown-anchor" href="#3-发送邮件">#</a> 3. 发送邮件</h4>
+
+  </article>
+  
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    
+    <ul><li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li></ul>
+  </div>
+  <dl></dl>
+</aside>
+<script src="/project/sylph/js/mobile-aside.js"></script>
+
+</div>
+
+
+
+  </div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script> 
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script> -->
+</html>

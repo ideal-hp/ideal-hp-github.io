@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sylph安装 - sylph流计算平台</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/project/sylph/images/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/project/sylph/css/index.css">
+
+
+
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/project/sylph/en/" class="nav-logo" alt="nodeui">
+    <img src="/project/sylph/images/logo.png" width="89"><span>SYLPH</span>
+    </a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li>
+
+      <li class="translations">
+        <a class="nav-link">change language</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/project/sylph/zh-cn">中文</a></li>
+          <li><a href="/project/sylph/en">English</a></li>
+        </ul>
+      </li>
+
+      <!-- github star星数 -->
+      <li>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=star&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=fork&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+      </li>
+
+      
+
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Sylph安装</h1>
+    <h3 id="下载源码"><a class="markdown-anchor" href="#下载源码">#</a> 下载源码</h3>
+<p>https://github.com/harbby/sylph/releases/</p>
+<h3 id="编译"><a class="markdown-anchor" href="#编译">#</a> 编译</h3>
+<p><strong>编译sylph需要使用Gradle并需要Java 8.请确保您的JAVA_HOME环境为java8</strong></p>
+<p>编译
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./gradlew clean assemble install</span><br></pre></td></tr></table></figure></p>
+
+  </article>
+  
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    
+    <ul><li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li></ul>
+  </div>
+  <dl><dt>guide</dt><dd><ul><li><a href="/project/sylph/en/docs/intro/index.html" class="">What is STLPH</a></li><li><a href="/project/sylph/en/docs/intro/quickstart.html" class="">Quick start</a></li><li><a href="/project/sylph/en/docs/intro/etl.html" class="">ETL Job</a></li></ul></dd><dt>Basics</dt><dd><ul><li><a href="/project/sylph/en/docs/basics/setup.html" class="cur">Setup</a></li><li><a href="/project/sylph/en/docs/basics/structure.html" class="">Directory Structure</a></li><li><a href="/project/sylph/en/docs/basics/deployment.html" class="">Application deployment</a></li><li><a href="/project/sylph/en/docs/basics/online.html" class="">Job Online</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/project/sylph/en/docs/advanced/framework.html" class="">Framework development</a></li><li><a href="/project/sylph/en/docs/advanced/plugin_manager.html" class="">PluginManager</a></li><li><a href="/project/sylph/en/docs/advanced/plugin_api.html" class="">connector Api</a></li></ul></dd><dt>FAQ</dt><dd><ul><li><a href="/project/sylph/en/docs/faq/deploy.html" class="">Deploy</a></li></ul></dd><dt>Other</dt><dd><ul><li><a href="/project/sylph/en/docs/basics/service.html" class="">Service</a></li></ul></dd></dl>
+</aside>
+<script src="/project/sylph/js/mobile-aside.js"></script>
+
+</div>
+
+  </div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script> 
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script> -->
+</html>
