@@ -29,10 +29,23 @@
       </li>
       <li><a href="/project/sylph/zh-cn/docs/intro/" alt="使用文档" class="">使用文档</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="发布日志" class="">发布日志</a></li><li><a href="/project/sylph/zh-cn/page/user.html" alt="使用案例" class="">使用案例</a></li>
 
+      <li class="translations">
+        <a class="nav-link">切换语言</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/project/sylph/zh-cn">中文</a></li>
+          <li><a href="/project/sylph/en">English</a></li>
+        </ul>
+      </li>
+
+      <!-- github star星数 -->
+      <li>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=star&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=fork&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+      </li>
+
       
-      
-      
-      
+
     </ul>
     <a id="mobileTrigger" href="#" class="mobile-trigger">
       <ul>
@@ -48,7 +61,13 @@
     <div class="page-main">
   <article class="markdown-body">
     <h1>Sylph安装</h1>
-    
+    <h3 id="下载源码"><a class="markdown-anchor" href="#下载源码">#</a> 下载源码</h3>
+<p>https://github.com/harbby/sylph/releases/</p>
+<h3 id="编译"><a class="markdown-anchor" href="#编译">#</a> 编译</h3>
+<p><strong>编译sylph需要使用Gradle并需要Java 8.请确保您的JAVA_HOME环境为java8</strong></p>
+<p>编译
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./gradlew clean assemble install</span><br></pre></td></tr></table></figure></p>
+
   </article>
   
   <aside id="mobileAside" class="toc">
