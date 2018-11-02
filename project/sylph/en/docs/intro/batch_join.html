@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>维表join - sylph流计算平台</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/project/sylph/images/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/project/sylph/css/index.css">
+
+
+
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/project/sylph/en/" class="nav-logo" alt="nodeui">
+    <img src="/project/sylph/images/logo.png" width="89"><span>SYLPH</span>
+    </a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li>
+
+      <li class="translations">
+        <a class="nav-link">语言</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/project/sylph/zh-cn">中文</a></li>
+          <li><a href="/project/sylph/en">English</a></li>
+        </ul>
+      </li>
+
+      <!-- github star星数 -->
+      <li>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=star&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=harbby&repo=sylph&type=fork&count=true" frameborder="0" scrolling="0" width="80px" height="20px"></iframe>
+      </li>
+
+      
+
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>维表join</h1>
+    <p>维表join在大数据中非常常见,通常我们需要在入库时对数据进行过滤和join打宽.
+sylph sql现在已经执行简单的维表join,</p>
+<h3 id="demo"><a class="markdown-anchor" href="#demo">#</a> demo</h3>
+<p>下面将通过一个demo来演示sylph 的join功能.
+该例子模拟读取实时json数据进行解析取出user_id和ip字段,
+然后计算每个用户每5秒的<code>count(distinct key)</code>数,
+接下来和mysql中的users表 进行join取出 name和city。
+最后 Insert into 存储数据到外部
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">function</span> json_parser <span class="keyword">as</span> <span class="string">'ideal.sylph.runner.flink.udf.JsonParser'</span>;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">function</span> row_get <span class="keyword">as</span> <span class="string">'ideal.sylph.runner.flink.udf.RowGet'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">source</span> <span class="keyword">table</span> topic1(</span><br><span class="line">    <span class="keyword">key</span> <span class="built_in">varchar</span>,</span><br><span class="line">    <span class="keyword">value</span> <span class="built_in">varchar</span>,     <span class="comment">-- json</span></span><br><span class="line">    event_time <span class="built_in">bigint</span></span><br><span class="line">) <span class="keyword">with</span> (</span><br><span class="line">    <span class="keyword">type</span> = <span class="string">'ideal.sylph.plugins.flink.source.TestSource'</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 定义数据流输出位置</span></span><br><span class="line"><span class="keyword">create</span> sink <span class="keyword">table</span> print_table_sink(</span><br><span class="line">    uid <span class="built_in">varchar</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">varchar</span>,</span><br><span class="line">    city <span class="built_in">varchar</span>,</span><br><span class="line">    cnt <span class="keyword">long</span>,</span><br><span class="line">    window_time <span class="built_in">varchar</span></span><br><span class="line">) <span class="keyword">with</span> (</span><br><span class="line">    <span class="keyword">type</span> = <span class="string">'console'</span>,   <span class="comment">-- print console</span></span><br><span class="line">    other = <span class="string">'demo001'</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 定义维表</span></span><br><span class="line"><span class="keyword">create</span> batch <span class="keyword">table</span> <span class="keyword">users</span>(</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">varchar</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">varchar</span>,</span><br><span class="line">    city <span class="built_in">varchar</span></span><br><span class="line">) <span class="keyword">with</span> (</span><br><span class="line">    <span class="keyword">type</span> = <span class="string">'mysql'</span>,   <span class="comment">-- print console</span></span><br><span class="line">    userName = <span class="string">'demo'</span>,</span><br><span class="line">    <span class="keyword">password</span> = <span class="string">'demo'</span>,</span><br><span class="line">    <span class="keyword">url</span> = <span class="string">'jdbc:mysql://localhost:3306/pop?characterEncoding=utf-8&amp;useSSL=false'</span></span><br><span class="line">    <span class="comment">-- query = 'select * from users where ...'  --可以下推谓词</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 描述数据流计算过程</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> print_table_sink</span><br><span class="line"><span class="keyword">with</span> tb1 <span class="keyword">as</span> (</span><br><span class="line">    <span class="keyword">select</span> <span class="keyword">key</span>, row_get(rowline,<span class="number">0</span>) <span class="keyword">as</span> uid , row_get(rowline,<span class="number">1</span>) <span class="keyword">as</span> ip, event_time, proctime</span><br><span class="line">    <span class="keyword">from</span> topic1 , LATERAL <span class="keyword">TABLE</span>(json_parser(<span class="string">`value`</span>,<span class="string">'user_id,ip'</span>)) <span class="keyword">as</span> T(rowline) </span><br><span class="line">),tb2 <span class="keyword">as</span> (</span><br><span class="line">    <span class="keyword">select</span> uid,</span><br><span class="line">    <span class="keyword">count</span>(<span class="keyword">distinct</span> <span class="keyword">key</span>) <span class="keyword">as</span> cnt,</span><br><span class="line">    <span class="keyword">cast</span>(TUMBLE_START(proctime,<span class="built_in">INTERVAL</span> <span class="string">'5'</span> <span class="keyword">SECOND</span>) <span class="keyword">as</span> <span class="built_in">varchar</span>)|| <span class="string">'--&gt;'</span> </span><br><span class="line">    || <span class="keyword">cast</span>(TUMBLE_END(proctime,<span class="built_in">INTERVAL</span> <span class="string">'5'</span> <span class="keyword">SECOND</span>) <span class="keyword">as</span> <span class="built_in">varchar</span>) <span class="keyword">AS</span> start_time</span><br><span class="line">    <span class="keyword">from</span> tb1 <span class="keyword">where</span> uid <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line">    <span class="keyword">group</span> <span class="keyword">by</span> uid,TUMBLE(proctime,<span class="built_in">INTERVAL</span> <span class="string">'5'</span> <span class="keyword">SECOND</span>)</span><br><span class="line">) </span><br><span class="line"><span class="keyword">select</span> tb2.uid, users.name ,users.city, tb2.cnt, tb2.start_time </span><br><span class="line"><span class="keyword">from</span> tb2 <span class="keyword">left</span> <span class="keyword">join</span> <span class="keyword">users</span> <span class="keyword">on</span> tb2.uid = users.id</span><br><span class="line"><span class="keyword">having</span> <span class="number">1</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="注意事项"><a class="markdown-anchor" href="#注意事项">#</a> 注意事项</h3>
+<ul>
+<li>1, 维表join时 为了解析方便,请尽量将唯表放到右边</li>
+<li>2, 只支持left join 和 Inner join(维表在右边时), 相信原因可以参考: http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#support-matrix-for-joins-in-streaming-queries</li>
+<li>3  on 只支持and(equals) 条件1 and 条件2 and 条件3</li>
+<li>4  对于条件只支持equals(<code>=</code>) 例如 on tb1.a1=tb2.id and ...</li>
+<li>5  对于equals条件暂时不支持常量, 例如 on tb1.a1 = 'sylph' 目前是不支持的, 原因是涉及到谓词下推问题</li>
+<li>6  不支持join where 原因如上 因为涉及到谓词下推问题</li>
+<li>7  完整支持 having语句</li>
+</ul>
+<h3 id="关于维表插件-目前只实现了mysql"><a class="markdown-anchor" href="#关于维表插件-目前只实现了mysql">#</a> 关于维表插件 目前只实现了mysql</h3>
+<p>实现非常简单,请参考 sylph-mysql/ideal.sylph.plugins.mysql.MysqlAsyncFunction.java
+如果有用到redis或者别的 可参考这个进行简单实现,或参考<code>进阶</code>中开发指南</p>
+<h3 id="关于缓存问题"><a class="markdown-anchor" href="#关于缓存问题">#</a> 关于缓存问题</h3>
+<p>MysqlAsyncFunction 采用LRU缓存策略, 使用的本地缓存. 如果想使用分布式缓存,可以自行修改非常简单.</p>
+<h3 id="other"><a class="markdown-anchor" href="#other">#</a> other</h3>
+<ul>
+<li>关于json 解析采用的udtf来实现的,总体上因为calcite语法原因 对比hive显得不够优雅
+但在这种方案不影响性能 切非常灵活</li>
+<li>上面示例mysql 建表语句如下:</li>
+</ul>
+<pre><code class="language-mysql">-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` varchar(10) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `city` char(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES ('1', 'h123', '123');
+INSERT INTO `users` VALUES ('2', 'p123', '123');
+INSERT INTO `users` VALUES ('4', '小王', 'dikd3939');
+INSERT INTO `users` VALUES ('uid_1', 'test', 'test');
+INSERT INTO `users` VALUES ('uid_5', 'sylph', 'demo');
+</code></pre>
+
+  </article>
+  
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    
+    <ul><li><a href="/project/sylph/en/docs/intro/" alt="Document" class="">Document</a></li><li><a href="https://github.com/harbby/sylph/releases" alt="release" class="">release</a></li><li><a href="/project/sylph/en/page/user.html" alt="Case" class="">Case</a></li></ul>
+  </div>
+  <dl><dt>guide</dt><dd><ul><li><a href="/project/sylph/en/docs/intro/index.html" class="">What is STLPH</a></li><li><a href="/project/sylph/en/docs/intro/quickstart.html" class="">Quick start</a></li><li><a href="/project/sylph/en/docs/intro/etl.html" class="">ETL Job</a></li><li><a href="/project/sylph/en/docs/intro/batch_join.html" class="cur">stream join batch</a></li></ul></dd><dt>Basics</dt><dd><ul><li><a href="/project/sylph/en/docs/basics/setup.html" class="">Setup</a></li><li><a href="/project/sylph/en/docs/basics/structure.html" class="">Directory Structure</a></li><li><a href="/project/sylph/en/docs/basics/deployment.html" class="">Application deployment</a></li><li><a href="/project/sylph/en/docs/basics/online.html" class="">Job Online</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/project/sylph/en/docs/advanced/framework.html" class="">Framework development</a></li><li><a href="/project/sylph/en/docs/advanced/plugin_manager.html" class="">PluginManager</a></li><li><a href="/project/sylph/en/docs/advanced/plugin_api.html" class="">connector Api</a></li></ul></dd><dt>FAQ</dt><dd><ul><li><a href="/project/sylph/en/docs/faq/deploy.html" class="">Deploy</a></li></ul></dd><dt>Other</dt><dd><ul><li><a href="/project/sylph/en/docs/basics/service.html" class="">Service</a></li></ul></dd></dl>
+</aside>
+<script src="/project/sylph/js/mobile-aside.js"></script>
+
+</div>
+
+  </div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script> 
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script> -->
+</html>
