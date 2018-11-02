@@ -73,7 +73,7 @@ sylph sql现在已经执行简单的维表join,</p>
 <h3 id="注意事项"><a class="markdown-anchor" href="#注意事项">#</a> 注意事项</h3>
 <ul>
 <li>1, 维表join时 为了解析方便,请尽量将唯表放到右边</li>
-<li>2, 只支持left join 和 Inner join(维表在右边时), 相信原因可以参考: http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#support-matrix-for-joins-in-streaming-queries</li>
+<li>2, 只支持left join 和 Inner join(维表在右边时), 相信原因可以参考: <a href="join">http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html#support-matrix-for-joins-in-streaming-queries</a></li>
 <li>3  on 只支持and(equals) 条件1 and 条件2 and 条件3</li>
 <li>4  对于条件只支持equals(<code>=</code>) 例如 on tb1.a1=tb2.id and ...</li>
 <li>5  对于equals条件暂时不支持常量, 例如 on tb1.a1 = 'sylph' 目前是不支持的, 原因是涉及到谓词下推问题</li>
